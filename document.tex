@@ -3,7 +3,8 @@
 
 \usepackage[T2A]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage[colorlinks, unicode]{hyperref}
+\usepackage{color}
+\usepackage[colorlinks, citecolor=blue, pagecolor=magenta, linkcolor=blue, unicode]{hyperref}
 \usepackage[english, russian]{babel}
 \usepackage{misccorr}
 \usepackage{listings}
@@ -20,7 +21,8 @@
 		frameround=tttt,
 		basicstyle=\tt , 
 		keywordstyle=\textbf,		
-		commentstyle=\textit}
+		commentstyle=\textit
+		}
 
 \maketitle
 \tableofcontents
@@ -35,7 +37,7 @@
 \section*{Введение}
 \hypertarget{#preface}{}
 
-Git~--- это быстрая распределённая система контроля версиями.
+Git "--- это быстрая распределённая система контроля версиями.
 
 Это руководство рассчитано на тех, кто обладает базовыми знаниями командной
 строки Unix, и совершенно не разбирается в git.
@@ -46,26 +48,26 @@ Git~--- это быстрая распределённая система кон
 создавать и тестировать отдельные версии программного проекта, восстанавливать 
 предыдущие состояния и т. д. Тех, кто занимается разработкой, заинтересуют главы
 \href{#chapter3}{Глава~3. Разработка вместе с git} и 
-\href{#chapter4}{Глава~4. Совместная разработка}. После\-дующие главы 
+\href{#chapter4}{Глава~4. Совместная разработка}. Последующие главы 
 охватывают более специализированные вопросы.
 
-Наиболее полная документация доступна на страницах \verb|man| и при вызове
+Наиболее полная документация доступна на страницах \emph{man} и при вызове
 команды \href{http://www.kernel.org/pub/software/scm/git/docs/git-help.html}
-{git-help(1)}. Например, для комманды \verb|git clone <repo>|, вы 
+{git-help(1)}. Например, для комманды \emph{git clone <repo>}, вы 
 можете использовать:
 
-\begin{verbatim}
+\begin{lstlisting}
 $ man git-clone
-\end{verbatim}
+\end{lstlisting}
 
 или
 
-\begin{verbatim}
+\begin{lstlisting}
 $ git help clone
-\end{verbatim}
+\end{lstlisting}
 
 Так же вы можете использовать любую программу просмотра руководства
-\verb|man|.
+\emph{man}.
 Для подробной информации обратитесь к 
 \href{http://www.kernel.org/pub/software/scm/git/docs/git-help.html}
 {git-help(1)}.
@@ -133,7 +135,7 @@ $ git branch
 * master
 \end{lstlisting}
 
-Недавно склонированный репозиторий содержит единственную ветвь, назваему по умолчанию
+Недавно склонированный репозиторий содержит единственную ветвь, называему по умолчанию
 <<master>>.
 % дописать
 
@@ -157,6 +159,26 @@ v2.6.13
 
 Теги всегда указывают на одну и ту же версию проекта, в то время как заголовки
 модифицируются вместе с развитием проекта.
+
+Для создания заголовка указывающего на новую ветку одной из версий проекта
+осуществляется с помощью команды
+\href{http://www.kernel.org/pub/software/scm/git/docs/git-checkout.html}{git-checkout(1)}:
+
+\begin{lstlisting}
+$ git checkout -b new v.2.6.13
+\end{lstlisting}
+
+Рабочая директория содержащая проект была помещена тегом \emph{v.2.6.13}. Теперь
+команда \href{http://www.kernel.org/pub/software/scm/git/docs/git-branch.html}{git-branch(1)}
+покажет две ветки. Текущая ветвь помечена <<звёздочкой>>:
+
+\begin{lstlisting}
+$ git branch
+  master
+* new
+\end{lstlisting}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % END
