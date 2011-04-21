@@ -18,11 +18,11 @@
 
 \begin{document}
 
-\lstset{language=bash, 
+\lstset{language=bash,
 		frame=trbl,
 		frameround=tttt,
-		basicstyle=\ttfamily\small , 
-		keywordstyle=\textbf ,		
+		basicstyle=\ttfamily\small ,
+		keywordstyle=\textbf ,
 		commentstyle=\textit
 		}
 
@@ -272,8 +272,8 @@ index 65898fa..b002dc6 100644
 \subsection{Понятие истории: Диаграммы истории}
 
 Мы иногда будем представлять истори git в виде диаграммы, как показано ниже. Коммит
-изображается символом <<\texttt{\small o}>>, а связи между ними "--- <<->>, 
-<<\textbackslash>> и <</>>. Время течёт слева направо:
+изображается символом <<\texttt{\small o}>>, а связи между ними "--- <<\texttt{\small -}>>, 
+<<\texttt{\small \textbackslash}>> и <<\texttt{\small /}>>. Время течёт слева направо:
 
 \begin{lstlisting}
          o--o--o <-- Branch A
@@ -300,37 +300,38 @@ index 65898fa..b002dc6 100644
 
 \section{Действия с ветвями}
 
+
 Создание, удаление и изменение ветвей "--- это быстро и легко. Вот краткое изложение
 основных команд:
 
 \begin{description}
 
-\item[git branch] \ 
-\linebreak список всех ветвей;
+\item[git branch] \ \\
+список всех ветвей;
 
-\item[git branch <branch>] \ \linebreak
+\item[git branch <branch>] \ \\
 создание новой ветки по имени <branch>, ссылающейся на тот же коммит, 
 что и текущая ветка;
 
-\item[git branch <branch> <start-point>] \ \linebreak
+\item[git branch <branch> <start-point>] \ \\
 создание новой ветки по имени <branch>, ссылающейся на точку <start-point>,
 которая может быть как уже используемой веткой, так и тегом;
 
-\item[git branch -d <branch>] \ \linebreak
+\item[git branch -d <branch>] \ \\
 удаление ветки <branch>. Если эта ветка, которую вы хотите удалить, 
 указывает на коммит не доступный из текущей ветки, то команда не будет выполнена
 и вы получите предупреждающее сообщение;
 
-\item[git branch -D <branch>] \ \linebreak
+\item[git branch -D <branch>] \ \\
 даже если эта ветвь указывает на коммит не доступный из текущей ветки, вы можете
 знать, что он доступен из другой ветки или тега. В этом случае можно с уверенностью
 использовать данную команду, чтобы заставить git без вопросов удалить ветку;
 
-\item[git checkout <branch>] \ \linebreak
+\item[git checkout <branch>] \ \\
 делает текущей ветку <branch>, и модифицирует соответствующим образом рабочую
 папку;
 
-\item[git checkout -b <new> <start-point>] \ \linebreak
+\item[git checkout -b <new> <start-point>] \ \\
 создаёт новую ветвь <new>, ссылающуюся на <start-point>, и переходит в неё.
 
 \end{description}
@@ -344,6 +345,41 @@ $ cat .git/HEAD
 ref: refs/heads/master
 \end{lstlisting}
 %$
+
+
+\subsection{Изучение старой версии без создание новой ветки}
+
+Выполнение команды \emph{git checkout} вызывает создание нового заголовка на ветку.
+При этом вы получаете возможность делать коммиты и даже тегировать их:
+
+\begin{lstlisting}
+$ git checkout v2.6.17
+Note: moving to "v2.6.17" which isn't a local branch
+If you want to create a new branch from this checkout, you 
+may do so (now or later) by using -b with the checkout 
+command again. Example:
+  git checkout -b <new_branch_name>
+HEAD is now at 427abfa... Linux v2.6.17
+\end{lstlisting}
+%$
+
+HEAD ссылается на код SHA-1 коммита, а не на ветку. При этом \emph{git branch} 
+показывает, что вы теперь находитесь вне ветви:
+
+\begin{lstlisting}
+$ cat .git/HEAD
+427abfa28afedffadfca9dd8b067eb6d36bac53f
+$ git branch
+* (no branch)
+  master
+\end{lstlisting}
+
+В данном примере вы видете, что HEAD <<независим>>.
+
+Это простой путь создание обособленной независимой версии проекта без создания
+новой именованной ветки. При этом вы можете создать новую ветвь (или тег) для 
+данной версии позже, когда это будет необходимо.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % END
