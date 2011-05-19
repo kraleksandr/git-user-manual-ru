@@ -453,6 +453,7 @@ $ git checkout -b my-todo-copy origin/todo
 решения конфликтов имён, можно увидеть в ''SPECIFYING REVISIONS'' в 
 \href{http://www.kernel.org/pub/software/scm/git/docs/gitrevisions.html}{gitrevisions(7)}.
 
+
 \section{Обновление репозитория с помощью git fetch}
 
 В конце концов, разработчик, склонировав репозиторий, должен сделать какую-то работу над
@@ -462,6 +463,49 @@ $ git checkout -b my-todo-copy origin/todo
 Команда ''git fetch'', без аргументов, обновляет все дистанционно отслеживаемые ветки до
 последней версии найденой в вашем репозитории. Это обновление не затронет ваших веток, 
 даже мастер-ветвь, которая была создана при клонировании.
+
+
+\section{Стягивание ветвей из других репозиториев}
+
+Также вы можете отслеживать изменения ветвей из других репозиториев, а не только из вами
+клонированного. Для этого используейте
+\href{http://www.kernel.org/pub/software/scm/git/docs/git-remote.html}{get-remote(1)}:
+
+\begin{lstlisting}
+$ git remote add linux-nfs git://linux-nfs.org/
+                                     pub/nfs-2.6.git
+$ git fetch linux-nfs
+* refs/remotes/linux-nfs/master: storing branch 'master' ...
+  commit: bf81b46
+\end{lstlisting}
+
+Новые ветки удалённого слежения будут сохранены под именем, которое вы дали в
+команде <<git remote add>>. В данном случае это <<linux-nfs>>:
+
+\begin{lstlisting}
+$ git branch -r
+linux-nfs/master
+origin/master
+\end{lstlisting}
+%$
+
+После, запуск <<git fetch \emph{remote}>> обновит удалённо отслеживаемые ветви,
+именуемые \emph{remote}.
+
+Если вы просмотрите файл .git/config, то увидите, что git создал новый элемент:
+
+\begin{lstlisting}
+$ cat .git/config
+...
+[remote "linux-nfs"]
+        url = git://linux-nfs.org/pub/nfs-2.6.git
+        fetch = +refs/heads/*:refs/remotes/linux-nfs/*
+...
+\end{lstlisting}
+%$
+
+Это заставит git остлеживать удаленные ветки. Вы можете модифицировать или удалить
+эти параметры, отредактировав .git/config любым текстовым редактором.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % END
